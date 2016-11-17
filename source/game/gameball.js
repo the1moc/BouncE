@@ -1,0 +1,3 @@
+GameBall = function(game) {
+	
+}

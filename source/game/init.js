@@ -15,8 +15,11 @@ var initState = {
 		game.load.image("cannon", "assets/playing/cannon.png");
 		game.load.image("dangerBall", "assets/playing/dangerball.png");
 		game.load.image("standardBall", "assets/playing/standardball.png");
+		game.load.physics("standardBallPhysics", "assets/playing/ballPhysics.json");
 		game.load.image("placerBall", "assets/playing/placerball.png");
 		game.load.image("returnButton", "assets/playing/returnButton.png");
+		game.load.image("sideBarrier", "assets/playing/side.png");
+		game.load.physics("sideBarrierPhysics", "assets/playing/sideBarrierPhysics.json");
 	},
 
 	create: function()

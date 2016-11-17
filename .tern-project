@@ -1,7 +1,9 @@
 {
-  "libs": ["browser"],
-  "plugins" : {
- 	"phaser" : {},
- 	"doc_comment": {}
+  "ecmaVersion": 5,
+  "libs": [
+    "browser"
+  ],
+  "plugins": {
+    "phaser": {}
   }
 }
