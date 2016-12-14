@@ -1,0 +1,16 @@
+{ 
+    
+    "cannon": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   5, 1  ,  69, 33  ,  70, 67  ,  5, 100  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   100, 67  ,  70, 67  ,  69, 33  ,  100, 33  ]
+        }
+    ]
+}
