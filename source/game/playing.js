@@ -2,27 +2,28 @@ var playingState = {
 
 	// The standard create function.
 	create: function() {
+		// Level creator to generate the level
 		levelCreator = new LevelCreator(game);
 		levelCreator.initialisePhysics();
-
-		// Create and populate the level.
+		levelCreator.createFactories();
 		levelCreator.addStaticSprites();
 		levelCreator.generateLevel();
-
-		// Add the return button
 		levelCreator.addButtons();
+
+		// Called to play sounds.
+		soundPlayer = new SoundPlayer(game);
 
 		hasBallBeenCreated = false;
 	},
 
 	// The standard update function.
 	update: function() {
-
 		this.determineCannonRotation();
 
 		if (game.input.activePointer.isDown && !hasBallBeenCreated) {
-			this.addPlayerBall();
+			levelCreator.createPlayerBall();
 			hasBallBeenCreated = true;
+			soundPlayer.fireSound();
 		}
 	},
 
@@ -34,9 +35,4 @@ var playingState = {
 
 		cannon.angle = invertedAngle - ((invertedAngle - cannonMidPoint) * 2);
 	},
-
-	// Add the ball that the player will fire
-	addPlayerBall: function() {
-		var gameBall = new GameBall(game, 50);
-	}
 };

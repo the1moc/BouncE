@@ -14,7 +14,6 @@ PegFactory = function(game) {
       newPeg.body.clearShapes();
       newPeg.body.loadPolygon("ballPhysics", "ball");
       newPeg.body.static = true;
-
       return newPeg;
     }
   };
@@ -22,6 +21,7 @@ PegFactory = function(game) {
 
 StandardBall = function(game, row, column) {
   Phaser.Sprite.call(this, game, 25 + (100 * row), 150 + (150 * column), "standardBall");
+  this.recentCollision = false;
 };
 
 StandardBall.prototype = Object.create(Phaser.Sprite.prototype);

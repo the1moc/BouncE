@@ -26,6 +26,10 @@ var initState = {
 		game.load.physics("ballPhysics", "assets/playing/ballPhysics.json");
 		game.load.physics("cannonPhysics", "assets/playing/cannonPhysics.json");
 		game.load.physics("sideBarrierPhysics", "assets/playing/sideBarrierPhysics.json");
+
+		// Add all the sound files
+		game.load.audio("fire", "assets/sound/fire.mp3");
+		game.load.audio("standardhit", "assets/sound/standardcollide.wav");
 	},
 
 	create: function() {
