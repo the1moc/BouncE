@@ -1,18 +1,16 @@
 // All sound calls 
-SoundPlayer = function(game) {
+SoundController = function(game) {
   fire        = game.add.audio("fire");
   standardHit = game.add.audio("standardhit");
 
-  return {
     // The ball has been fired.
-    fireSound: function() {
+    this.fireSound = function() {
         fire.play();
-        standardHit.play();
-    },
+    }
 
     // A standard ball has been hit
-    standardCollideSound: function() {
+    this.standardCollideSound = function() {
       standardHit.play();
     }
-  }
+
 };

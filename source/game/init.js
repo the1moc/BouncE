@@ -17,6 +17,7 @@ var initState = {
 		game.load.image("dangerBall", "assets/playing/dangerball.png");
 		game.load.image("gameBall", "assets/playing/gameball.png");
 		game.load.image("placerBall", "assets/playing/placerball.png");
+		game.load.image("deactivatedBall", "assets/playing/deactivatedball.png");
 		game.load.image("playBackground", "assets/playing/playingBackground.png");
 		game.load.image("returnButton", "assets/playing/returnButton.png");
 		game.load.image("sideBarrier", "assets/playing/side.png");
@@ -28,7 +29,7 @@ var initState = {
 		game.load.physics("sideBarrierPhysics", "assets/playing/sideBarrierPhysics.json");
 
 		// Add all the sound files
-		game.load.audio("fire", "assets/sound/fire.mp3");
+		game.load.audio("fire", "assets/sound/fire.wav");
 		game.load.audio("standardhit", "assets/sound/standardcollide.wav");
 	},
 

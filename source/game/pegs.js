@@ -1,8 +1,7 @@
 PegFactory = function(game) {
 
-  return {
     // Creation of the pegs.
-    createPeg: function(type, row, column) {
+    this.createPeg = function(type, row, column) {
       switch (type) {
         case "standard":
           newPeg = new StandardBall(game, row, column);
@@ -16,7 +15,6 @@ PegFactory = function(game) {
       newPeg.body.static = true;
       return newPeg;
     }
-  };
 };
 
 StandardBall = function(game, row, column) {

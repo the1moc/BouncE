@@ -1,48 +1,51 @@
 // Function to create the level (pass in a number to determine which level is going to be chosen)
-LevelCreator = function(game, sexyNumber) {
+LevelController = function(game, collisionController, scoreController) {
 
-  var pegFactory;
-  var collisionController;
   var gameBall;
 
-  return {
-    // Initialise the physics system.
-    initialisePhysics: function() {
-      game.physics.startSystem(Phaser.Physics.P2JS);
-      game.physics.p2.setImpactEvents(true);
-      game.physics.p2.updateBoundsCollisionGroup();
-      game.physics.p2.gravity.y   = 1000;
-      game.physics.p2.restitution = 0.9;
-    },
+    // Create the level.
+    this.createLevel = function() {
+      createFactories();
+      addStaticSprites();
+      generateLevel();
+      addButtons();
+    }
 
-    // Create the factories.
-    createFactories: function() {
-      pegFactory          = new PegFactory(game);
-      collisionController = new CollisionController(game);
-    },
+    // Create the player ball, but do not add it.
+    this.createPlayerBall = function() {
+        var gameBall = new GameBall(game, 0.3);
+        collisionController.addToCollisionGroup(0, gameBall);
 
-    // Add the buttons on the game.
-    addButtons: function() {
-      game.add.button(25, 25, "returnButton", this.returnButtonClick, this);
-    },
+        game.add.existing(gameBall);
+    }
 
     // Called on the click event.
-    returnButtonClick: function() {
+    returnButtonClick = function() {
       game.state.start("menu");
-    },
+    }
+
+    // Create the factories.
+    createFactories = function() {
+      pegFactory          = new PegFactory(game);
+    }
+
+    // Add the buttons on the game.
+    addButtons = function() {
+      game.add.button(25, 25, "returnButton", returnButtonClick, this);
+    }
 
     // Add the sprites that will not be altered during play.
-    addStaticSprites: function() {
+    addStaticSprites = function() {
       game.add.sprite(0, 0, "playBackground");
 
       cannon = game.add.sprite(game.world.centerX - 15, 0, "cannon");
       cannon.anchor.setTo(0.5, 0.5);
-    },
+    }
 
     // Generate the full level.
-    generateLevel: function() {
+    generateLevel = function() {
 
-      this.addLevelObstacles();
+      addLevelObstacles();
 
       // Add all the pegs for this level.
       for (row = 1; row <= 9; row++) {
@@ -53,18 +56,10 @@ LevelCreator = function(game, sexyNumber) {
           game.add.existing(peg);
         }
       }
-    },
-
-    // Create the player ball, but do not add it.
-    createPlayerBall: function() {
-        var gameBall = new GameBall(game, 0.3);
-        collisionController.addToCollisionGroup(0, gameBall);
-
-        game.add.existing(gameBall);
-    },
+    }
 
     // Called to generate the static objects around the map.
-    addLevelObstacles: function() {
+    addLevelObstacles = function() {
       // levelStructure = game.add.physicsGroup(Phaser.Physics.P2JS);
 
       // Clear the current shapes collision areas.
@@ -75,5 +70,4 @@ LevelCreator = function(game, sexyNumber) {
       // leftSide.body.loadPolygon("sideBarrierPhysics", "sideBarrier");
       // leftSide.body.static = true;
     }
-  };
 };
