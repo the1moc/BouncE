@@ -16,8 +16,10 @@ var initState = {
 		game.load.image("cannon", "assets/playing/cannon.png");
 		game.load.image("dangerBall", "assets/playing/dangerball.png");
 		game.load.image("gameBall", "assets/playing/gameball.png");
-		game.load.image("placerBall", "assets/playing/placerball.png");
+		game.load.image("multiplierBall", "assets/playing/multiplierball.png");
+		game.load.image("subtractBall", "assets/playing/subtractball.png");
 		game.load.image("deactivatedBall", "assets/playing/deactivatedball.png");
+		game.load.image("placerBall", "assets/playing/placerball.png");
 		game.load.image("playBackground", "assets/playing/playingBackground.png");
 		game.load.image("returnButton", "assets/playing/returnButton.png");
 		game.load.image("sideBarrier", "assets/playing/side.png");
@@ -30,7 +32,11 @@ var initState = {
 
 		// Add all the sound files
 		game.load.audio("fire", "assets/sound/fire.wav");
-		game.load.audio("standardhit", "assets/sound/standardcollide.wav");
+		game.load.audio("standardcollide", "assets/sound/standardcollide.wav");
+		game.load.audio("multipliercollide", "assets/sound/multipliercollide.wav");
+		game.load.audio("subtractcollide", "assets/sound/subtractcollide.wav");
+		game.load.audio("placercollide", "assets/sound/placercollide.wav");
+		game.load.audio("dangercollide", "assets/sound/dangercollide.wav");
 	},
 
 	create: function() {

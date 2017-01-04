@@ -6,12 +6,8 @@ GameBall = function(game, rotationSpeed) {
 	game.physics.p2.enable(this);
 	this.body.rotation = cannon.rotation + 1.5;
 	this.body.thrust(50000);
+	this.body.collideWorldBounds = true;
 };
 
 GameBall.prototype = Object.create(Phaser.Sprite.prototype);
 GameBall.prototype.constructor = GameBall;
-
-// Keep the ball constantly spinning.
-GameBall.prototype.update = function() {
-	this.body.rotation += this.rotationSpeed;
-};

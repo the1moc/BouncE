@@ -1,11 +1,8 @@
 // Function to create the level (pass in a number to determine which level is going to be chosen)
-LevelController = function(game, collisionController, scoreController) {
-
-  var gameBall;
+LevelController = function(game, collisionController, scoreController, selectedLevel, ballFactory) {
 
     // Create the level.
     this.createLevel = function() {
-      createFactories();
       addStaticSprites();
       generateLevel();
       addButtons();
@@ -13,20 +10,28 @@ LevelController = function(game, collisionController, scoreController) {
 
     // Create the player ball, but do not add it.
     this.createPlayerBall = function() {
-        var gameBall = new GameBall(game, 0.3);
-        collisionController.addToCollisionGroup(0, gameBall);
+        gameBall      = new GameBall(game, 0.3);
+        gameBall.type = "gameBall";
+
+        gameBall.events.onKilled.add(ballKilled, this);
+        collisionController.addToCollisionGroup(gameBall);
+
+        gameBall.checkWorldBounds = true;
+        gameBall.outOfBoundsKill  = true;
 
         game.add.existing(gameBall);
+    }
+
+    // The ball has been destroyed
+    ballKilled = function(ball) {
+      // Reset physics.
+      game.physics.p2.gravity.y   = 500;
+      game.state.states["playing"].hasBallBeenCreated = false;
     }
 
     // Called on the click event.
     returnButtonClick = function() {
       game.state.start("menu");
-    }
-
-    // Create the factories.
-    createFactories = function() {
-      pegFactory          = new PegFactory(game);
     }
 
     // Add the buttons on the game.
@@ -44,30 +49,22 @@ LevelController = function(game, collisionController, scoreController) {
 
     // Generate the full level.
     generateLevel = function() {
+      var levelLayout = levels.getLevelLayout(selectedLevel);
 
-      addLevelObstacles();
+      var topBuffer       = (game.height / 100) * 12;
+      var verticalSpacing = (game.height / 10);
+      var verticalSpacingIndex = 0;
 
-      // Add all the pegs for this level.
-      for (row = 1; row <= 9; row++) {
-        for (column = 1; column <= 9; column++) {
-          peg = pegFactory.createPeg("standard", row, column);
-          collisionController.addToCollisionGroup(1, peg);
+      levelLayout.forEach(function(value, index) {
+        for(i = 1; i <= value; i++)
+        {
+          var horizontalSpacing = (game.width) / (value + 1);
+          var ball              = ballFactory.createBall(i * horizontalSpacing, topBuffer + (index * verticalSpacing));
+          collisionController.addToCollisionGroup(ball);
 
-          game.add.existing(peg);
+          game.add.existing(ball);
         }
-      }
-    }
-
-    // Called to generate the static objects around the map.
-    addLevelObstacles = function() {
-      // levelStructure = game.add.physicsGroup(Phaser.Physics.P2JS);
-
-      // Clear the current shapes collision areas.
-      // leftSide = levelStructure.create(80, 600, "sideBarrier");
-      // leftSide.body.clearShapes();
-
-      // Load the new collision detections from the JSON files.
-      // leftSide.body.loadPolygon("sideBarrierPhysics", "sideBarrier");
-      // leftSide.body.static = true;
+        verticalSpacingIndex++;
+      });
     }
 };
