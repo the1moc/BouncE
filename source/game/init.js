@@ -11,6 +11,7 @@ var initState = {
 		game.load.image("menuBackground", "assets/menu/background.png");
 		game.load.image("play", "assets/menu/play.png");
 		game.load.image("record", "assets/menu/record.png");
+		game.load.image("highScore", "assets/menu/highscore.png");
 
 		// Add all the playing files.
 		game.load.image("cannon", "assets/playing/cannon.png");
@@ -24,6 +25,7 @@ var initState = {
 		game.load.image("returnButton", "assets/playing/returnButton.png");
 		game.load.image("sideBarrier", "assets/playing/side.png");
 		game.load.image("standardBall", "assets/playing/standardball.png");
+		game.load.image("gameOver", "assets/playing/gameover.png");
 
 		// Add all the physics (.json) files
 		game.load.physics("ballPhysics", "assets/playing/ballPhysics.json");
@@ -36,6 +38,7 @@ var initState = {
 		game.load.audio("multipliercollide", "assets/sound/multipliercollide.wav");
 		game.load.audio("subtractcollide", "assets/sound/subtractcollide.wav");
 		game.load.audio("placercollide", "assets/sound/placercollide.wav");
+		game.load.audio("placerteleport", "assets/sound/placerteleport.wav");
 		game.load.audio("dangercollide", "assets/sound/dangercollide.wav");
 	},
 

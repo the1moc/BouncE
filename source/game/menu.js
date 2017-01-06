@@ -2,11 +2,11 @@ var menuState = {
 
 	init: function() {
 		// Add some extra properties to the buttons.
-		Phaser.Button.prototype.levelNumber = 0;
 		Phaser.Button.prototype.isSelected  = false;
-		Phaser.Button.prototype.difficulty  = "easy";
 		this.selectedLevel                  = 1;
 		this.selectedDifficulty             = "easy";
+
+		this.checkScoresExist();
 	},
 
 	// The standard creation function.
@@ -19,7 +19,7 @@ var menuState = {
 	// Adding the buttons.
 	addButtons: function() {
 		game.add.button(25, 550, "play", this.playButtonClick, this);
-		game.add.button(25, 725, "record", this.recordButtonClick, this);
+		game.add.button(25, 725, "record", this.scoreButtonClick, this);
 
 		var levelOneText   = game.add.text(45, 15, "1", {font: "20px Arial", fill: "#ffffff"});
 		var levelTwoText   = game.add.text(45, 15, "2", {font: "20px Arial", fill: "#ffffff"});
@@ -68,6 +68,36 @@ var menuState = {
 		hardButton.addChild(hardText);
 	},
 
+	// Check the local storage for the current high scores.
+	checkScoresExist: function() {
+		if(!localStorage.getItem('easyOneScore'))
+			localStorage.setItem('easyOneScore', 0);
+
+		if(!localStorage.getItem('mediumOneScore'))
+			localStorage.setItem('mediumOneScore', 0);
+
+		if(!localStorage.getItem('hardOneScore'))
+			localStorage.setItem('hardOneScore', 0);
+
+		if(!localStorage.getItem('easyTwoScore'))
+			localStorage.setItem('easyTwoScore', 0);
+
+		if(!localStorage.getItem('mediumTwoScore'))
+			localStorage.setItem('mediumTwoScore', 0);
+
+		if(!localStorage.getItem('hardTwoScore'))
+			localStorage.setItem('hardTwoScore', 0);
+
+		if(!localStorage.getItem('easyThreeScore'))
+			localStorage.setItem('easyThreeScore', 0);
+
+		if(!localStorage.getItem('mediumThreeScore'))
+			localStorage.setItem('mediumThreeScore', 0);
+
+		if(!localStorage.getItem('hardThreeScore'))
+			localStorage.setItem('hardThreeScore', 0);
+	},
+
 	// Remove the isSelected tag from all the level buttons.
 	removeLevelSelections: function() {
 		if(levelOneButton.isSelected) {
@@ -100,11 +130,6 @@ var menuState = {
 		}
 	},
 
-	// Fired on a click of the play button.
-	playButtonClick: function() {
-		game.state.start("playing");
-	},
-
 	// Fired on the click of a level selection button.
 	levelButtonClick: function(button) {
 		this.removeLevelSelections();
@@ -121,9 +146,45 @@ var menuState = {
 		button.loadTexture(selectedBitmap);
 	},
 
+	// Fired on a click of the play button.
+	playButtonClick: function() {
+		game.state.start("playing");
+	},
+
 	// Fired on a click of the score button.
-	recordButtonClick: function() {
+	scoreButtonClick: function() {
 		// Start playing the game
-		game.state.start("score");
+		easyOne     = localStorage.getItem('easyOneScore');
+		mediumOne   = localStorage.getItem('mediumOneScore');	
+		hardOne     = localStorage.getItem('hardOneScore');		
+		easyTwo     = localStorage.getItem('easyTwoScore');		
+		mediumTwo   = localStorage.getItem('mediumTwoScore');
+		hardTwo     = localStorage.getItem('hardTwoScore');		
+		easyThree   = localStorage.getItem('easyThreeScore');
+		mediumThree = localStorage.getItem('mediumThreeScore');
+		hardThree   = localStorage.getItem('hardThreeScore');
+
+		scores              = game.add.sprite(100, 500, "highScore");
+		scores.inputEnabled = true;
+
+		scores.events.onInputDown.add(function() {
+			scores.destroy();
+		}, this);
+
+		scoreFont = {
+      					font: "30px Arial",
+     					fill: "#000000"
+    				};
+
+    	scores.addChild(game.add.text(100, 140, "Level One - Easy: " + easyOne, scoreFont));
+    	scores.addChild(game.add.text(100, 180, "Level One - Medium: " + mediumOne, scoreFont));
+    	scores.addChild(game.add.text(100, 220, "Level One - Hard: " + hardOne, scoreFont));
+    	scores.addChild(game.add.text(100, 260, "Level Two - Easy: " + easyTwo, scoreFont));
+    	scores.addChild(game.add.text(100, 300, "Level Two - Medium: " + mediumTwo, scoreFont));
+    	scores.addChild(game.add.text(100, 340, "Level Two - Hard: " + hardTwo, scoreFont));
+    	scores.addChild(game.add.text(100, 380, "Level Three - Easy: " + easyThree, scoreFont));
+    	scores.addChild(game.add.text(100, 420, "Level Three - Medium: " + mediumThree, scoreFont));
+    	scores.addChild(game.add.text(100, 460, "Level Three - Hard: " + hardThree, scoreFont));
+    	scores.addChild(game.add.text(100, 520, "Press to close...", scoreFont));
 	}
 };

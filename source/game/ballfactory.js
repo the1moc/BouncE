@@ -45,24 +45,24 @@ BallFactory = function(game, selectedDifficulty) {
 
       switch(selectedDifficulty) {
         case "easy":
-          standard   = .80;
-          multiplier = .90;
-          danger     = .95;
-          subtract   = .97;
+          standard   = .70;
+          multiplier = .80;
+          danger     = .85;
+          subtract   = .90;
           placer     = .99;
           break;
         case "medium":
-          standard   = .65;
-          multiplier = .75;
-          danger     = .85;
+          standard   = .75;
+          multiplier = .82;
+          danger     = .87;
           subtract   = .90;
           placer     = .99;
           break;
         case "hard":
           standard   = .50;
           multiplier = .55;
-          danger     = .70;
-          subtract   = .90;
+          danger     = .75;
+          subtract   = .92;
           placer     = .99;
           break;
       }

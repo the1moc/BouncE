@@ -10,23 +10,23 @@ LevelController = function(game, collisionController, scoreController, selectedL
 
     // Create the player ball, but do not add it.
     this.createPlayerBall = function() {
-        gameBall      = new GameBall(game, 0.3);
-        gameBall.type = "gameBall";
+        this.gameBall      = new GameBall(game, 0.3);
+        this.gameBall.type = "gameBall";
 
-        gameBall.events.onKilled.add(ballKilled, this);
-        collisionController.addToCollisionGroup(gameBall);
+        this.gameBall.events.onKilled.add(ballKilled, this);
+        collisionController.addToCollisionGroup(this.gameBall);
 
-        gameBall.checkWorldBounds = true;
-        gameBall.outOfBoundsKill  = true;
+        this.gameBall.checkWorldBounds = true;
+        this.gameBall.outOfBoundsKill  = true;
 
-        game.add.existing(gameBall);
+        game.add.existing(this.gameBall);
     }
 
     // The ball has been destroyed
     ballKilled = function(ball) {
       // Reset physics.
       game.physics.p2.gravity.y   = 500;
-      game.state.states["playing"].hasBallBeenCreated = false;
+      game.state.states["playing"].activeBall = false;
     }
 
     // Called on the click event.
@@ -43,7 +43,7 @@ LevelController = function(game, collisionController, scoreController, selectedL
     addStaticSprites = function() {
       game.add.sprite(0, 0, "playBackground");
 
-      cannon = game.add.sprite(game.world.centerX - 15, 0, "cannon");
+      cannon = game.add.sprite(game.world.centerX, 0, "cannon");
       cannon.anchor.setTo(0.5, 0.5);
     }
 
@@ -51,8 +51,8 @@ LevelController = function(game, collisionController, scoreController, selectedL
     generateLevel = function() {
       var levelLayout = levels.getLevelLayout(selectedLevel);
 
-      var topBuffer       = (game.height / 100) * 12;
-      var verticalSpacing = (game.height / 10);
+      var topBuffer            = (game.height / 100) * 12;
+      var verticalSpacing      = (game.height / 100) * 5;
       var verticalSpacingIndex = 0;
 
       levelLayout.forEach(function(value, index) {

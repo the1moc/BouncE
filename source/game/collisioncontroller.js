@@ -130,22 +130,13 @@ CollisionController = function(game, soundPlayer, scoreController, ballFactory) 
       {
         hitBall.sprite.recentCollision = true;
         hitBall.sprite.loadTexture("deactivatedBall");
-        game.input.onDown.add(unpause, self, this, gameBall);
-        game.paused = true;
+
+        soundPlayer.placerCollideSound();
+
+        game.state.states["playing"].teleports++;
+        scoreController.updateTeleportText(game.state.states["playing"].teleports);
 
         this.replaceBall(hitBall);
-      }
-    }
-
-    // Unpause the game if it is paused
-    unpause = function(pointer, self, hitBall) {
-      if (game.paused)
-      {
-        gameBall.body.x = game.input.activePointer.x;
-        gameBall.body.y = game.input.activePointer.y;
-        gameBall.body.setZeroVelocity();
-        game.paused = false;
-        soundPlayer.placerCollideSound();
       }
     }
 };

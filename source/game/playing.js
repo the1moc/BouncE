@@ -3,7 +3,11 @@ var playingState = {
 	init: function() {
 		this.selectedLevel      = this.game.state.states["menu"].selectedLevel;
 		this.selectedDifficulty = this.game.state.states["menu"].selectedDifficulty;
-		this.hasBallBeenCreated = false;
+		this.activeBall         = false;
+		this.currentMode        = "playing";
+		this.teleports          = 0;
+		this.ballsRemaining     = 3;
+		this.teleportDelay      = false;
 	},
 
 	// The standard create function.
@@ -22,30 +26,120 @@ var playingState = {
 		this.collisionController.createCollisionGroups();
 		this.levelController.createLevel();
 		this.scoreController.createScore();
-
-		ballsRemaining     = 3;
+		this.scoreController.createTeleportCount();
 	},
 
 	// The standard update function.
 	update: function() {
-		this.determineCannonRotation();
+		this.determineCannonRotation(); 
 
-		if (game.input.activePointer.isDown && !this.hasBallBeenCreated && ballsRemaining > 0) {
-			this.levelController.createPlayerBall();
-			this.hasBallBeenCreated = true;
-			this.soundController.fireSound();
+		// Teleport the ball.
+		game.input.onTap.add(function() {
+			if (this.activeBall && this.teleports > 0 && !this.levelController.gameBall.recentTeleport
+				&& !this.teleportDelay) {
+				this.levelController.gameBall.place();
+				this.soundController.placerTeleportSound();
+        		this.teleports--;
+        		this.scoreController.updateTeleportText(this.teleports);
+			}
+		}, this);
 
-			ballsRemaining--;
+		// Fire a new ball.
+		game.input.onTap.add(function() {
+			if (!this.activeBall && this.ballsRemaining > 0) {
+				this.levelController.createPlayerBall();
+
+				this.activeBall = true;
+				this.soundController.fireSound();
+
+				this.ballsRemaining--;
+
+				// Prevent instant teleport when you fire.
+				this.teleportDelay = true;
+
+				var _this = this;
+				setTimeout(function() {
+					_this.teleportDelay = false;
+				}, 1000);
+			}
+		}, this);
+
+		//If the game is over.
+		if (this.ballsRemaining === 0 && !this.activeBall && this.currentMode === "playing")
+		{
+			var levelIdentifier = this.getLevelAndDifficultyScore();
+			var highScore                    = this.scoreController.getLevelScore(levelIdentifier);
+
+			var popup = game.add.sprite(200, 600, "gameOver");
+
+			game.add.text(250, 750, "Your score: " + this.scoreController.currentScore, {
+      			font: "40px Arial",
+     			fill: "#FFFFFF"
+    			});
+			game.add.text(250, 850, "Top score: " + highScore, {
+      			font: "40px Arial",
+      			fill: "#FFFFFF"
+    			});
+
+			if (this.scoreController.currentScore > highScore)
+				this.scoreController.updateLevelScore(levelIdentifier);
+
+			this.currentMode = "gameover";
 		}
 	},
 
 	// Point the cannon in the direction of the pointer.
 	determineCannonRotation: function() {
-		// Fix this later on
-		var cannonMidPoint = 90;
-		var invertedAngle = Math.atan2(game.input.activePointer.x - game.world.centerX, game.input.activePointer.y - cannon.height) * 180 / Math.PI + 90;
+		// Change this to use formulae at some point.
+		cannon.rotation = game.physics.arcade.angleToPointer(cannon);
+	},
 
-		cannon.angle = invertedAngle - ((invertedAngle - cannonMidPoint) * 2);
+
+	// Get the current saved score for this level and difficulty.
+	getLevelAndDifficultyScore: function() {
+		switch(this.selectedLevel) {
+		case 1:
+			switch(this.selectedDifficulty){
+				case "easy":
+					return "easyOneScore";
+					break;
+				case "medium":
+					return "mediumOneScore";
+					break;
+				case "hard":
+					return "hardOneScore";
+					break;
+			}
+			break;
+		case 2:
+			switch(this.selectedDifficulty){
+				case "easy":
+					return "easyTwoScore";
+					break;
+				case "medium":
+					return "mediumTwoScore";
+					break;
+				case "hard":
+					return "hardTwoScore";
+					break;
+			}
+			break;
+		case 3:
+			switch(this.selectedDifficulty){
+				case "easy":
+					return "easyThreeScore";
+					break;
+				case "medium":
+					return "mediumThreeScore";
+					break;
+				case "hard":
+					return "hardThreeScore";
+					break;
+			}
+			break;
+		default:
+			return "error";
+		}
 	},
 
     // Initialise the physics system.

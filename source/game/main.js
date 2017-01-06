@@ -22,7 +22,6 @@ function preload() {
   game.state.add("menu", menuState);
   game.state.add("selection", selectionState);
   game.state.add("playing", playingState);
-  game.state.add("score", scoreState);
 
   // Get the game started
   game.state.start("init");
