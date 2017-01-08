@@ -23,7 +23,7 @@ LevelController = function(game, collisionController, scoreController, selectedL
     }
 
     // The ball has been destroyed
-    ballKilled = function(ball) {
+    ballKilled = function() {
       // Reset physics.
       game.physics.p2.gravity.y   = 500;
       game.state.states["playing"].activeBall = false;
