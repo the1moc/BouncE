@@ -8,12 +8,13 @@ var playingState = {
 		this.teleports          = 0;
 		this.ballsRemaining     = 3;
 		this.teleportDelay      = false;
+
+		// Initialise the physics first.
+		this.initialisePhysics();
 	},
 
 	// The standard create function.
 	create: function() {
-		// Initialise the physics first.
-		this.initialisePhysics();
 		game.physics.p2.setBounds(0, 0, game.width, game.height, true, true, true, false, true);
 
 		// Create the controllers and factories.

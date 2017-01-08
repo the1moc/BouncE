@@ -2,7 +2,7 @@
 ScoreController = function(game) {
   this.createScore = function() {
     this.currentScore = 0;
-    this.scoreLabel = game.add.text(650, 25, "Score: 0", {
+    this.scoreLabel = game.add.text(650, 25, "Score:", {
       font: "40px Arial",
       fill: "#000000"
     });
