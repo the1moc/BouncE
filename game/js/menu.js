@@ -141,7 +141,7 @@ var menuState = {
 	// Fired on the click of a level selection button.
 	difficultyButtonClick: function(button) {
 		this.removeDifficultySelections();
-		button.isSelected  = true;
+		button.isSelected       = true;
 		this.selectedDifficulty = button.difficulty;
 		button.loadTexture(selectedBitmap);
 	},

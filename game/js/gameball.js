@@ -23,5 +23,5 @@ GameBall = function(game, rotationSpeed) {
     }
 };
 
-GameBall.prototype = Object.create(Phaser.Sprite.prototype);
+GameBall.prototype             = Object.create(Phaser.Sprite.prototype);
 GameBall.prototype.constructor = GameBall;

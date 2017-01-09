@@ -69,7 +69,7 @@ var playingState = {
 		if (this.ballsRemaining === 0 && !this.activeBall && this.currentMode === "playing")
 		{
 			var levelIdentifier = this.getLevelAndDifficultyScore();
-			var highScore                    = this.scoreController.getLevelScore(levelIdentifier);
+			var highScore       = this.scoreController.getLevelScore(levelIdentifier);
 
 			var popup = game.add.sprite(200, 600, "gameOver");
 

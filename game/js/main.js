@@ -13,7 +13,7 @@ function preload() {
   } else {
     game.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
   }
-//becca 
+
   // Keep the aspect ratio correct
   game.scale.maxWidth = game.scale.maxHeight * 0.62;
 

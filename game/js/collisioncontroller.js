@@ -93,7 +93,7 @@ CollisionController = function(game, soundPlayer, scoreController, ballFactory) 
       }
     }
 
-        // Collision with a standard ball
+      // Collision with a standard ball
     dangerCollision = function(gameBall, hitBall) {
       if (!hitBall.sprite.recentCollision)
       {
@@ -108,7 +108,7 @@ CollisionController = function(game, soundPlayer, scoreController, ballFactory) 
       }
     }
 
-            // Collision with a standard ball
+    // Collision with a standard ball
     multiplierCollision = function(gameBall, hitBall) {
       if (!hitBall.sprite.recentCollision)
       {
