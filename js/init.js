@@ -16,7 +16,7 @@ var initState = {
 		// Add all the playing files.
 		game.load.image("cannon", "assets/playing/cannon.png");
 		game.load.image("dangerBall", "assets/playing/dangerball.png");
-		game.load.image("gameBall", "assets/playing/gameball.png");
+		game.load.image("gameBall", "assets/playing/gameBall.png");
 		game.load.image("multiplierBall", "assets/playing/multiplierball.png");
 		game.load.image("subtractBall", "assets/playing/subtractball.png");
 		game.load.image("deactivatedBall", "assets/playing/deactivatedball.png");
